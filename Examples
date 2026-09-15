@@ -3,3 +3,131 @@ StormEvents
 | where State == "FLORIDA"  
 | count
 
+
+
+DeviceEvents
+| take 10
+
+DeviceNetworkEvents
+| where DeviceName == "corpgenws01.otrflabs.com"
+//|take  10
+| sort by Timestamp desc 
+
+
+DeviceNetworkEvents
+|where DeviceName == "corpgenws01.otrflabs.com"
+|where Timestamp > ago(36000h)
+
+
+DeviceNetworkEvents
+|where Timestamp > ago(3h)
+|where DeviceName == "corpgenws01.otrflabs.com"
+|join kind=inner (
+DeviceFileEvents
+|where  Timestamp > ago(3h)
+|where DeviceName == "corpgenws01.otrflabs.com"
+)
+on InitiatingProcessFileName
+
+DeviceEvents
+| where ActionType =="ServiceInstalled"
+|summarize Count =count() by FileName
+|top 5 by Count asc 
+
+
+DeviceEvents
+|where ActionType =="ServiceInstalled"
+|where Timestamp between ( datetime(2023-9-11) .. datetime(2023-9-12) )
+|project  format_datetime(Timestamp,'yyyy-M-dd'),DeviceId,DeviceName,FileName
+
+DeviceEvents
+|where ActionType =="ServiceInstalled"
+|where Timestamp > ago(2000d)
+|project  format_datetime(Timestamp,'yyyy-M-dd'),DeviceId,DeviceName,FileName
+
+DeviceEvents
+|where ActionType =="ServiceInstalled"
+|where Timestamp > now(-2000d)
+|project  format_datetime(Timestamp,'yyyy-M-dd'),DeviceId,DeviceName,FileName
+
+
+let roletype="Admin";
+UserProfiles
+|project  Department,Role,UserId,UserName
+|where Role ==roletype
+
+let roletype="Admin";
+UserProfiles
+|distinct  Department,Role
+|where Role ==roletype
+
+let path=@'C:\Windows\CCM';
+DeviceEvents
+| where FolderPath ==path
+
+
+let path="C:\\Windows\\CCM";
+DeviceEvents
+| where FolderPath ==path
+
+
+let path="C:\\Windows\\CCM";
+DeviceEvents
+| where FolderPath !=path
+
+UserProfiles
+| count 
+
+UserProfiles
+|sample 10
+
+UserProfiles
+|take 10
+
+UserProfiles
+|limit  10
+
+
+UserProfiles
+|distinct  Department
+
+print space = "Hello\u00A0World"
+
+
+UserProfiles
+| project-rename ID=UserId,FirstName=UserName,Country= UserLocation
+
+
+UserProfiles
+| project-away  Domain
+
+UserProfiles
+| project-keep UserName,UserLocation
+
+UserProfiles
+| project-reorder UserLocation
+
+SecurityEvent
+| count 
+
+
+let disdevice=
+DeviceInfo
+|distinct  DeviceName
+;
+
+DeviceInfo
+| summarize dcount(DeviceName)
+
+
+DeviceInfo
+| distinct DeviceName
+|count 
+
+
+
+
+DeviceFileEvents
+| distinct  DeviceName,FileName
+|count
+

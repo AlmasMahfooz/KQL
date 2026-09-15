@@ -1,0 +1,40 @@
+
+database('FindMyPartner').table('Partner') 
+| project Website
+
+
+SecurityEvent
+| where EventID == 4624
+| summarize count() by TargetUserName
+
+
+UserLoginEvents
+| where Success=="true" 
+|where EventTime between (datetime(2023-09-13) .. datetime(2023-09-14))
+
+
+SecurityEvent
+|where TimeGenerated between (datetime(2023-09-13) .. datetime(2023-09-14)) 
+|where EventID ==4624
+//|distinct TargetUserName
+|summarize c= count() by TargetUserName
+|where c>100
+
+// Setting the timestamp parameters to use the ago() function
+let start_time = datetime(2023-09-12 14:10:00);
+let end_time = datetime(2023-09-14 14:10:00);
+SecurityEvent
+| where TimeGenerated between (start_time .. end_time)
+| where EventID == 4624
+|distinct Computer, TargetUserName
+| summarize unique_computer_count = count() by TargetUserName
+| where unique_computer_count > 3
+
+// Setting the timestamp parameters to use the ago() function
+let start_time = datetime(2023-09-12 14:10:00);
+let end_time = datetime(2023-09-14 14:10:00);
+SecurityEvent
+| where TimeGenerated between (start_time .. end_time)
+| where EventID == 4624
+| summarize unique_computer_count = dcount(Computer) by TargetUserName
+| where unique_computer_count > 3

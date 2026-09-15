@@ -5,9 +5,15 @@ https://kc7cyber.com/
 
 Youtube: https://www.youtube.com/watch?v=c9iBrJSB298
 
+https://github.com/Azure/ADX-in-a-Day-Lab1
 
+https://github.com/tertiarycourses/TGS-2024042602-Microsoft-Certified-Fabric-Data-Engineer-Associate-DP-700-Training
 
+https://tryhackme.com/room/kqlkustointroduction
 
+https://learn.microsoft.com/en-us/training/modules/intro-to-azure-data-explorer/
+
+https://dataexplorer.azure.com/home
 
 kql.how
 

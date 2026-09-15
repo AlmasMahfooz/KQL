@@ -1,0 +1,23 @@
+search "DpapiAccessed"
+| distinct $table
+
+DeviceInfo
+| where DeviceName has "otrflabs.com"
+| distinct DeviceId
+|count 
+
+DeviceInfo
+| where DeviceName contains  "otrflabs.com"
+| distinct DeviceId
+| count 
+
+DeviceProcessEvents
+| where FileName in~ ('query.exe', 'quser.exe', 'systeminfo.exe')
+| distinct DeviceName
+|count 
+
+
+DeviceProcessEvents
+|search "query.exe" or  "quser.exe" or "systeminfo.exe"
+| distinct DeviceName
+|count 

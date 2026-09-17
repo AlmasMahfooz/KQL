@@ -2,7 +2,7 @@ StormEvents
 | take 5
 
 StormEvents
-| project EventType,State,DamageProperty,DamageCrops, InjuriesDirect,InjuriesIndirect
+|project EventType,State,DamageProperty,DamageCrops, InjuriesDirect,InjuriesIndirect
 |take 20
 
 StormEvents
@@ -27,7 +27,8 @@ StormEvents
 |where EventType has "wind"
 |project  State,EventType,DamageCrops
 
-StormEvents | where EventType contains "free"
+StormEvents
+|where EventType contains "free"
 
 StormEvents
 | where DamageProperty > 0
@@ -45,7 +46,6 @@ StormEvents
 
 
 // Challenge
-
 
 StormEvents
 | where DamageProperty+DamageCrops > 0

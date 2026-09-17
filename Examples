@@ -5,16 +5,12 @@ StormEvents
 | where State == "FLORIDA"  
 | count
 
-
-
 DeviceEvents
 | take 10
 
 DeviceNetworkEvents
 | where DeviceName == "corpgenws01.otrflabs.com"
-//|take  10
 | sort by Timestamp desc 
-
 
 DeviceNetworkEvents
 |where DeviceName == "corpgenws01.otrflabs.com"
@@ -24,12 +20,14 @@ DeviceNetworkEvents
 DeviceNetworkEvents
 |where Timestamp > ago(3h)
 |where DeviceName == "corpgenws01.otrflabs.com"
-|join kind=inner (
+|join kind=inner
+(
 DeviceFileEvents
 |where  Timestamp > ago(3h)
 |where DeviceName == "corpgenws01.otrflabs.com"
 )
 on InitiatingProcessFileName
+
 
 DeviceEvents
 | where ActionType =="ServiceInstalled"

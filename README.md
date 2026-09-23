@@ -2,7 +2,7 @@
 
 https://protego.me/blog/threat-hunting-microsoft-sentinel-kql-guide-2026
 
-
+https://protego.me/blog/threat-hunting-microsoft-sentinel-kql-guide-2026
 
 -- web site
 https://kc7cyber.com/

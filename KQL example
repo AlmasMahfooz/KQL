@@ -1,0 +1,23 @@
+SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType == 0
+| where AuthenticationRequirement == "multiFactorAuthentication"
+| where RiskLevelDuringSignIn in ("high", "medium")
+| extend DeviceId = tostring(DeviceDetail.deviceId)
+| summarize
+SigninCount = count(),
+IPs = make_set(IPAddress),
+RiskDetails = make_set(RiskDetail),
+Apps = make_set(AppDisplayName),
+DeviceId = any(DeviceId),
+TimeGenerated = max(TimeGenerated)
+by CorrelationId, UserPrincipalName, RiskLevelDuringSignIn
+| where array_length(IPs) > 1
+or isempty(DeviceId)
+| project TimeGenerated, UserPrincipalName, IPs, Apps, RiskLevelDuringSignIn, RiskDetails, CorrelationId, DeviceId, SigninCount
+| order by RiskLevelDuringSignIn desc, SigninCount desc
+
+This surfaces successful MFA sign-ins that Entra ID still flags as medium/high risk — the exact pattern many default analytics rules miss because “MFA passed = safe.”If it returns results, investigate immediately.
+High risk + MFA satisfied + proxy indicators (multiple IPs on the same CorrelationId or an empty DeviceId) is a classic AiTM phishing signal.
+
+Save it. Run it daily. You’ll catch stuff your alerts don’t.

@@ -1,4 +1,7 @@
 # KQL
+https://github.com/rod-trent/MustLearnKQL
+
+
 
 https://protego.me/blog/threat-hunting-microsoft-sentinel-kql-guide-2026
 
